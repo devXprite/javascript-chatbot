@@ -5,7 +5,9 @@
   "private": false,
   "license": "Apache Version 2.0",
   "scripts": {
+    "dev": "nodemon",
     "start": "node index.js",
+    "fix": "eslint . --ext .js --fix",
     "lint": "semistandard --fix \"**/*.js\""
   },
   "devDependencies": {
@@ -23,6 +25,7 @@
     "express-rate-limit": "^6.4.0",
     "extract-values": "^0.1.2",
     "lodash": "^4.17.21",
+    "lower-case": "^2.0.2",
     "morgan": "^1.10.0",
     "serve-static": "^1.15.0",
     "string-similarity": "^4.0.4",
