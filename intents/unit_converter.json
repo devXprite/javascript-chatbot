@@ -1,0 +1,10 @@
+{
+    "qus":[
+        "change %amount% %unit_from% into %unit_to%",
+        "can you convert %amount% %unit_from% to %unit_to%",
+        "convert %amount% %amount% into %unit_to%"
+    ],
+    "ans":{
+
+    }
+}

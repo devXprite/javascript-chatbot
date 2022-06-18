@@ -1,0 +1,10 @@
+{
+    "eslint.format.enable": true,
+    "files.exclude": {
+        ".gitattributes": true,
+        ".gitpod.yml": true,
+        "LICENSE": true,
+        "node_modules": true,
+        "package-lock.json": true
+    }
+}
