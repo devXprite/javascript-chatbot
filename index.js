@@ -86,15 +86,21 @@ const sendAnswer = (req, res) => {
         delimiters: ["{", "}"],
       });
 
-      const {
-        amount,
-        unitFrom,
-        unitTo,
-      } = valuesObj;
-
       rating = 1;
       action = "unit_converter";
-      responseText = changeUnit(amount, unitFrom, unitTo);
+
+      try {
+        const {
+          amount,
+          unitFrom,
+          unitTo,
+        } = valuesObj;
+
+        responseText = changeUnit(amount, unitFrom, unitTo);
+      } catch (error) {
+        responseText = "One or more unit missing.";
+        console.log(error);
+      }
     } else {
       const similarQuestionObj = stringSimilarity.findBestMatch(humanInput, allQustions).bestMatch;
       const similarQuestionRating = similarQuestionObj.rating;

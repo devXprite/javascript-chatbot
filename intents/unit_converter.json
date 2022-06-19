@@ -1,6 +1,7 @@
 [
-  "change {amount} {unit_from} into {unit_to}",
-  "can you convert {amount} {unit_from} to {unit_to}",
-  "convert {amount} {unit_from} into {unit_to}",
-  "how many {unit_to} in {amount} {unit_from}"
+  "change {amount} {unitFrom} into {unitTo}",
+  "change {amount} {unitFrom} to {unitTo}",
+  "can you convert {amount} {unitFrom} to {unitTo}",
+  "convert {amount} {unitFrom} into {unitTo}",
+  "how many {unitTo} in {amount} {unitFrom}"
 ]
