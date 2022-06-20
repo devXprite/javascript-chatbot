@@ -8,6 +8,7 @@ const { upperCaseFirst } = require("upper-case-first");
 
 const cors = require("cors");
 const morgan = require("morgan");
+const dotenv = require("dotenv");
 const express = require("express");
 const compression = require("compression");
 
@@ -16,14 +17,16 @@ const welcomeChat = require("./intents/Default_Welcome.json");
 const fallbackChat = require("./intents/Default_Fallback.json");
 const unitConverterChat = require("./intents/unit_converter.json");
 
+dotenv.config();
+
 const app = express();
 const port = process.env.PORT || 3000;
 
 const allQustions = [];
 
 for (let i = 0; i < mainChat.length; i++) {
-  for (let j = 0; j < mainChat[i].qus.length; j++) {
-    allQustions.push(mainChat[i].qus[j]);
+  for (let j = 0; j < mainChat[i].questions.length; j++) {
+    allQustions.push(mainChat[i].questions[j]);
   }
 }
 
@@ -82,7 +85,8 @@ const sendAnswer = (req, res) => {
 
     if (regExforUnitConverter.test(humanInput)) {
       const similarQuestionObj = stringSimilarity.findBestMatch(humanInput, unitConverterChat).bestMatch;
-      const valuesObj = extractValues(humanInput, similarQuestionObj.target, {
+      similarQuestion = similarQuestionObj.target;
+      const valuesObj = extractValues(humanInput, similarQuestion, {
         delimiters: ["{", "}"],
       });
 
@@ -109,15 +113,16 @@ const sendAnswer = (req, res) => {
 
       if (similarQuestionRating > 0.5) {
         for (let i = 0; i < mainChat.length; i++) {
-          for (let j = 0; j < mainChat[i].qus.length; j++) {
-            if (similarQuestion == mainChat[i].qus[j]) {
-              responseText = _.sample(mainChat[i].ans);
+          for (let j = 0; j < mainChat[i].questions.length; j++) {
+            if (similarQuestion == mainChat[i].questions[j]) {
+              responseText = _.sample(mainChat[i].answers);
               rating = similarQuestionRating;
             }
           }
         }
       } else {
         isFallback = true;
+        action = "Default_Fallback";
         if (humanInput.length <= 20 && !/(\s{1,})/gmi.test(humanInput)) {
           responseText = "You are probably hitting random keys :D";
         } else {
@@ -135,8 +140,12 @@ const sendAnswer = (req, res) => {
       similarQuestion,
     });
   } catch (error) {
-    res.status(500).send({ error: "Internal Server Error!", code: 500 });
     console.log(error);
+    if ((error.message).includes("URI")) {
+      res.status(500).send({ error: error.message, code: 500 });
+    } else {
+      res.status(500).send({ error: "Internal Server Error!", code: 500 });
+    }
   }
 };
 
