@@ -7,6 +7,7 @@ const stringSimilarity = require("string-similarity");
 const { upperCaseFirst } = require("upper-case-first");
 
 const cors = require("cors");
+const axios = require("axios");
 const morgan = require("morgan");
 const dotenv = require("dotenv");
 const express = require("express");
@@ -16,6 +17,7 @@ const mainChat = require("./intents/Main_Chat.json");
 const welcomeChat = require("./intents/Default_Welcome.json");
 const fallbackChat = require("./intents/Default_Fallback.json");
 const unitConverterChat = require("./intents/unit_converter.json");
+const wikipediaChat = require("./intents/wikipedia.json");
 
 dotenv.config();
 
@@ -71,7 +73,7 @@ const sendWelcomeMessage = (req, res) => {
   });
 };
 
-const sendAnswer = (req, res) => {
+const sendAnswer = async (req, res) => {
   let isFallback = false;
   let responseText = null;
   let rating = 0;
@@ -82,6 +84,7 @@ const sendAnswer = (req, res) => {
     const query = decodeURIComponent(req.query.q).replace(/\s+/g, " ").trim() || "Hello";
     const humanInput = lowerCase(query.replace(/(\?|\.|!)$/gmi, ""));
     const regExforUnitConverter = /(convert|change|in).{1,2}(\d{1,8})/gmi;
+    const regExforWikipedia = /(search for|tell me about|what is|who is)(?!.you) (.{1,30})/gmi;
 
     if (regExforUnitConverter.test(humanInput)) {
       const similarQuestionObj = stringSimilarity.findBestMatch(humanInput, unitConverterChat).bestMatch;
@@ -105,13 +108,32 @@ const sendAnswer = (req, res) => {
         responseText = "One or more unit missing.";
         console.log(error);
       }
+    } else if (regExforWikipedia.test(humanInput)) {
+      const similarQuestionObj = stringSimilarity.findBestMatch(humanInput, wikipediaChat).bestMatch;
+      similarQuestion = similarQuestionObj.target;
+      const valuesObj = extractValues(humanInput, similarQuestion, {
+        delimiters: ["{", "}"],
+      });
+
+      const { topic } = valuesObj;
+
+      const wikipediaResponse = (await axios(`https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=1&explaintext=1&titles=${topic}`)).data;
+      console.log(wikipediaResponse);
+      const wikipediaResponsePageNo = Object.keys(wikipediaResponse.query.pages)[0];
+      const wikipediaResponseText = wikipediaResponse.query.pages[wikipediaResponsePageNo].extract;
+
+      responseText = wikipediaResponseText;
+      if (wikipediaResponseText == undefined || wikipediaResponseText == "") {
+        responseText = "Sorry, we can't find any article with this exact name.";
+        isFallback = true;
+      }
     } else {
       const similarQuestionObj = stringSimilarity.findBestMatch(humanInput, allQustions).bestMatch;
       const similarQuestionRating = similarQuestionObj.rating;
       similarQuestion = similarQuestionObj.target;
       action = "main_chat";
 
-      if (similarQuestionRating > 0.5) {
+      if (similarQuestionRating > 0.6) {
         for (let i = 0; i < mainChat.length; i++) {
           for (let j = 0; j < mainChat[i].questions.length; j++) {
             if (similarQuestion == mainChat[i].questions[j]) {

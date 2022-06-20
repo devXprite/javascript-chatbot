@@ -3,5 +3,7 @@
   "change {amount} {unitFrom} to {unitTo}",
   "can you convert {amount} {unitFrom} to {unitTo}",
   "convert {amount} {unitFrom} into {unitTo}",
-  "how many {unitTo} in {amount} {unitFrom}"
+  "how many {unitTo} in {amount} {unitFrom}",
+  "how many {unitTo} are in {amount} {unitFrom}",
+  "what is {amount} {unitFrom} in {unitTo}"
 ]
