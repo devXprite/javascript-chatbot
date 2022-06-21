@@ -1,10 +1,11 @@
 /* eslint-disable max-len */
 const _ = require("lodash");
 const convert = require("convert-units");
-const { lowerCase } = require("lower-case");
 const extractValues = require("extract-values");
 const stringSimilarity = require("string-similarity");
+const { lowerCase } = require("lower-case");
 const { upperCaseFirst } = require("upper-case-first");
+const { capitalCase } = require("change-case");
 
 const cors = require("cors");
 const axios = require("axios");
@@ -105,7 +106,7 @@ const sendAnswer = async (req, res) => {
 
         responseText = changeUnit(amount, unitFrom, unitTo);
       } catch (error) {
-        responseText = "One or more unit missing.";
+        responseText = "One or more units are missing.";
         console.log(error);
       }
     } else if (regExforWikipedia.test(humanInput)) {
@@ -115,17 +116,19 @@ const sendAnswer = async (req, res) => {
         delimiters: ["{", "}"],
       });
 
-      const { topic } = valuesObj;
+      let { topic } = valuesObj;
+      topic = capitalCase(topic);
 
-      const wikipediaResponse = (await axios(`https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=1&explaintext=1&titles=${topic}`)).data;
-      console.log(wikipediaResponse);
-      const wikipediaResponsePageNo = Object.keys(wikipediaResponse.query.pages)[0];
-      const wikipediaResponseText = wikipediaResponse.query.pages[wikipediaResponsePageNo].extract;
+      const wikipediaResponse = await axios(`https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=1&explaintext=1&titles=${topic}`);
+      const wikipediaResponseData = wikipediaResponse.data;
+      const wikipediaResponsePageNo = Object.keys(wikipediaResponseData.query.pages)[0];
+      const wikipediaResponseText = wikipediaResponseData.query.pages[wikipediaResponsePageNo].extract;
 
-      responseText = wikipediaResponseText;
       if (wikipediaResponseText == undefined || wikipediaResponseText == "") {
-        responseText = "Sorry, we can't find any article with this exact name.";
+        responseText = `Sorry, we can't find any article related to "${topic}".`;
         isFallback = true;
+      } else {
+        responseText = wikipediaResponseText;
       }
     } else {
       const similarQuestionObj = stringSimilarity.findBestMatch(humanInput, allQustions).bestMatch;
@@ -145,7 +148,7 @@ const sendAnswer = async (req, res) => {
       } else {
         isFallback = true;
         action = "Default_Fallback";
-        if (humanInput.length <= 20 && !/(\s{1,})/gmi.test(humanInput)) {
+        if (humanInput.length >= 5 && humanInput.length <= 20 && !/(\s{1,})/gmi.test(humanInput)) {
           responseText = "You are probably hitting random keys :D";
         } else {
           responseText = _.sample(fallbackChat);

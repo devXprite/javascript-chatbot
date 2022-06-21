@@ -17,6 +17,8 @@
   },
   "dependencies": {
     "axios": "^0.27.2",
+    "case": "^1.6.3",
+    "change": "^0.0.0",
     "change-case": "^4.1.2",
     "compression": "^1.7.4",
     "convert-units": "^2.3.4",
