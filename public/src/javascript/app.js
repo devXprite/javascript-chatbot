@@ -9,7 +9,7 @@ const submitForm = () => {
   `);
 
   $.ajax({
-    url: `http://localhost:3000/api/question/?q=${encodeURIComponent(chatInput)}`,
+    url: `./api/question/?q=${encodeURIComponent(chatInput)}`,
     method: "GET",
     cache: false,
     beforeSend: () => {
@@ -45,7 +45,7 @@ window.onload = () => {
   setTimeout(() => {
     if (document.querySelectorAll(".chat-msg-box").length == 0) {
       $.ajax({
-        url: "http://localhost:3000/api/welcome",
+        url: "./api/welcome",
         method: "GET",
         cache: false,
         beforeSend: () => {
@@ -76,6 +76,19 @@ window.onload = () => {
       });
     }
   }, 3000);
+
+  $.ajax({
+    url: "./api/allquestions",
+    success: (data) => {
+      data.forEach((qus) => {
+        $("section.all-questions").append(`
+        <div class="question">
+          <p>${qus}</p>
+        </div>
+        `);
+      });
+    },
+  });
 };
 
 window.onresize = () => {
@@ -83,6 +96,18 @@ window.onresize = () => {
     $("header").css("top", "-4em");
   } else {
     $("header").css("top", "0vh");
+  }
+};
+
+const toogleShowQuestions = () => {
+  if ($("main").css("display") == "none") {
+    $("section.all-questions").hide();
+    $("main").show();
+    $("footer").show();
+  } else {
+    $("section.all-questions").css("display", "flex");
+    $("main").hide();
+    $("footer").hide();
   }
 };
 

@@ -3,7 +3,18 @@
   "description": "A Powerful ChatBot in NodeJs",
   "version": "0.0.1",
   "private": false,
-  "license": "Apache Version 2.0",
+  "license": "MIT",
+  "author": {
+    "name": "Prateek Singh",
+    "email": "bhps82@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/7orp3do/javascript-chatbot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/7orp3do/javascript-chatbot/issues"
+  },
   "scripts": {
     "dev": "nodemon",
     "start": "node index.js",

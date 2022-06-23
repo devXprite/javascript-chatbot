@@ -33,7 +33,7 @@ header {
   padding-left: 1rem;
   box-shadow: #000 2px 0px 4px;
   justify-content: space-around;
-  transition: all 1.5s;
+  transition: all 1s;
 }
 
 .typing {
@@ -51,14 +51,13 @@ header {
   animation: status-online 1s infinite linear alternate-reverse;
 }
 
-main,
-section.all-questions {
+main {
   height: 86vh;
   margin-top: 8vh;
 }
 
 .chat-msg-box {
-  background-color: gray;
+  background-color: #616161;
   /* width: auto; */
   /* display: inline-block; */
   padding: 0.5em 1em;
@@ -109,6 +108,34 @@ section.all-questions {
   font-size: 14px;
 }
 
+section.all-questions {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: space-around;
+}
+
+section.all-questions .question:nth-child(1) {
+  margin-top: 5em;
+}
+
+.question {
+  background-color: #616161;
+  margin: 0.4em 0.8em;
+  padding: 0.7em;
+  border-radius: 0.4em;
+  box-shadow: #000 2px 2px 6px;
+  font-size: 14px;
+}
+
+.question p::selection {
+  background-color: chocolate;
+  color: black;
+  user-select: all;
+  -webkit-user-select: all;
+}
+
 footer {
   background-color: inherit;
   position: fixed;
@@ -131,15 +158,33 @@ footer {
   color: #dbdbdb;
 }
 
+#chat-form {
+  display: flex;
+  align-items: center;
+}
+
 .chat-input:focus {
   outline: none;
   border-color: chartreuse;
 }
 
-.chat-submit {
-  width: 10vw;
+.chat-input:invalid {
+  border-color: orangered;
 }
 
+.chat-submit {
+  width: 10vw;
+  background: transparent;
+  border: 0;
+}
+
+.chat-submit svg {
+  fill: orange;
+}
+
+.chat-submit svg:hover {
+  fill: chartreuse;
+}
 /* loader  */
 .spinner {
   margin: 2px auto 0;
@@ -166,6 +211,16 @@ footer {
 .spinner .bounce2 {
   -webkit-animation-delay: -0.16s;
   animation-delay: -0.16s;
+}
+
+@media screen and (min-width: 680px) {
+  section.all-questions {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .question {
+    width: 31vw;
+  }
 }
 
 @-webkit-keyframes sk-bouncedelay {
@@ -199,4 +254,8 @@ footer {
   to {
     box-shadow: lime 0px 0px 12px 5px;
   }
+}
+
+section.all-questions {
+  display: none;
 }

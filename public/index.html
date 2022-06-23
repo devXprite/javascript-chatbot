@@ -35,29 +35,33 @@
       <h2>JavaScript ChatBot</h2>
       <p class="typing">bot is typing. . .</p>
     </div>
-    <div>
+    <div onclick="toogleShowQuestions()">
       <div class="status"></div>
     </div>
   </header>
 
   <main>
-
-    <div class="main-background">
-      <div>
-        <h3>JavaScript ChatBot</h3>
-        <p>A Simple & Powerful chatbot in JavaScript.</p>
-      </div>
-    </div>
   </main>
 
-  <section class="all-questions"> 
-    <p>How are You?</p>
+  <div class="main-background">
+    <div>
+      <h3>JavaScript ChatBot</h3>
+      <p>A Simple & Powerful chatbot in JavaScript.</p>
+    </div>
+  </div>
+
+  <section class="all-questions">
   </section>
 
   <footer>
     <form id="chat-form">
-      <input type="text" class="chat-input">
-      <button type="submit" class="chat-submit">S</button>
+      <input type="text" class="chat-input" required>
+      <button type="submit" class="chat-submit"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+          viewBox="0 0 24 24">
+          <path
+            d="M24 0l-6 22-8.129-7.239 7.802-8.234-10.458 7.227-7.215-1.754 24-12zm-15 16.668v7.332l3.258-4.431-3.258-2.901z" />
+        </svg>
+      </button>
     </form>
   </footer>
 
