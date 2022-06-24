@@ -18,9 +18,7 @@
       "I want to contact your developers by email",
       "your developers email"
     ],
-    "answers": [
-      "My developer email is [EMAIL]."
-    ]
+    "answers": ["My developer email is [DEVELOPER_EMAIL]."]
   },
   {
     "questions": [
@@ -58,7 +56,7 @@
       "who is your developer",
       "I said who made you tell me"
     ],
-    "answers": []
+    "answers": ["I am developed by [DEVELOPER_EMAIL]"]
   },
   {
     "questions": [
@@ -79,8 +77,6 @@
       "I need to report a bug that I've found in you",
       "send problem to developers"
     ],
-    "answers": [
-      "You can report your bug here."
-    ]
+    "answers": ["You can report your bug at [BUG_URL]."]
   }
 ]

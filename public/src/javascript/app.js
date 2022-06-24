@@ -102,10 +102,12 @@ window.onresize = () => {
 const toogleShowQuestions = () => {
   if ($("main").css("display") == "none") {
     $("section.all-questions").hide();
+    $("header img").attr("src", "./src/images/chat_icon.png");
     $("main").show();
     $("footer").show();
   } else {
     $("section.all-questions").css("display", "flex");
+    $("header img").attr("src", "./src/images/close.png");
     $("main").hide();
     $("footer").hide();
   }

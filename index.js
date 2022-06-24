@@ -198,8 +198,8 @@ const sendAnswer = async (req, res) => {
       isFallback = true;
     } else if (action != "wikipedia") {
       responseText = responseText
-        .replace(/(\[NAME\])/g, developerName)
-        .replace(/(\[EMAIL\])/g, developerEmail)
+        .replace(/(\[DEVELOPER_NAME\])/g, developerName)
+        .replace(/(\[DEVELOPER_EMAIL\])/g, developerEmail)
         .replace(/(\[BUG_URL\])/g, bugReportUrl);
     }
 
@@ -243,6 +243,5 @@ app.get("/api/welcome", sendWelcomeMessage);
 app.get("/api/allQuestions", sendAllQuestions);
 app.use(serveStatic(path.join(__dirname, "public")));
 app.get("*", notFound);
-app.get("");
 
 app.listen(port, () => console.log(`app listening on port ${port}!`));

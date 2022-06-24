@@ -34,12 +34,21 @@ header {
   box-shadow: #000 2px 0px 4px;
   justify-content: space-around;
   transition: all 1s;
+  font-family: "Comfortaa", cursive;
+}
+
+header h2 {
+  font-size: 1.35em;
 }
 
 .typing {
   font-size: 0.85em;
   color: chartreuse;
   display: none;
+}
+
+body > header > div:nth-child(2) > img {
+  width: 2em;
 }
 
 .status {
@@ -127,6 +136,7 @@ section.all-questions .question:nth-child(1) {
   border-radius: 0.4em;
   box-shadow: #000 2px 2px 6px;
   font-size: 14px;
+  background: linear-gradient(223deg, #616161, #454545);
 }
 
 .question p::selection {
@@ -141,7 +151,7 @@ footer {
   position: fixed;
   bottom: 0;
   width: 100vw;
-  height: 3.5em;
+  height: 3em;
   display: flex;
   align-items: center;
   box-shadow: #000 -2px 0px 4px 1px;
@@ -220,6 +230,15 @@ footer {
   }
   .question {
     width: 31vw;
+  }
+}
+
+@media screen and (max-width: 680px) {
+  div p{
+    font-size: 14px;
+  }
+  .chat-input{
+    font-size: 14px;
   }
 }
 
