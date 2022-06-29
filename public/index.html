@@ -10,14 +10,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap"
-    rel="stylesheet" />
-
-  <link rel="stylesheet" href="./src/css/normalize.min.css" />
-  <link rel="stylesheet" href="./src/css/sweetalert2.dark.min.css" />
-  <link rel="stylesheet" href="./src/css/app.css" />
-
-  <script src="https://kit.fontawesome.com/7b4d67b6f2.js"></script>
+  <link rel="stylesheet" href="./src/styles/normalize.min.css" />
+  <link rel="stylesheet/less" type="text/css" href="./src/styles/styles.less" />
+  <script src="./src/javascript/less.js"></script>
 
 </head>
 
@@ -27,8 +22,8 @@
       <h2>JavaScript ChatBot</h2>
       <p class="typing">bot is typing. . .</p>
     </div>
-    <div onclick="toogleShowQuestions()">
-      <img src="./src/images/chat_icon.png" alt="" srcset="">
+    <div id="toogle-chat" >
+      <img src="./src/images/chat_icon.png" class="suggest-chat" >
     </div>
   </header>
 
@@ -43,6 +38,8 @@
   </div>
 
   <section class="all-questions">
+    <h2>Suggested Chats</h2>
+    <div class="questions container"></div>
   </section>
 
   <footer>
@@ -58,9 +55,7 @@
   </footer>
 
   <script src="./src/javascript/jquery.min.js"></script>
-  <script src="./src/javascript/sweetalert2.min.js"></script>
   <script src="./src/javascript/typed.min.js"></script>
-  <script src="./src/javascript/notyf.min.js"></script>
   <script src="./src/javascript/app.js"></script>
 </body>
 

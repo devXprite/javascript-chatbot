@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 // submit form
 const submitForm = () => {
   const chatInput = $(".chat-input").val();
@@ -46,8 +47,6 @@ window.onload = () => {
     if (document.querySelectorAll(".chat-msg-box").length == 0) {
       $.ajax({
         url: "./api/welcome",
-        method: "GET",
-        cache: false,
         beforeSend: () => {
           $(".typing").show();
           $("main").append(`
@@ -78,10 +77,10 @@ window.onload = () => {
   }, 3000);
 
   $.ajax({
-    url: "./api/allquestions",
+    url: "http://javascript-chatbot.vercel.app/api/allquestions",
     success: (data) => {
       data.forEach((qus) => {
-        $("section.all-questions").append(`
+        $(".questions.container").append(`
         <div class="question">
           <p>${qus}</p>
         </div>
@@ -101,17 +100,21 @@ window.onresize = () => {
 
 const toogleShowQuestions = () => {
   if ($("main").css("display") == "none") {
-    $("section.all-questions").hide();
+    $(".questions.container").hide();
     $("header img").attr("src", "./src/images/chat_icon.png");
     $("main").show();
     $("footer").show();
   } else {
-    $("section.all-questions").css("display", "flex");
+    $(".questions.container").css("display", "flex");
     $("header img").attr("src", "./src/images/close.png");
     $("main").hide();
     $("footer").hide();
   }
 };
+
+$("#toogle-chat").on("click", () => {
+  toogleShowQuestions();
+});
 
 $("#chat-form").submit((e) => {
   e.preventDefault();
