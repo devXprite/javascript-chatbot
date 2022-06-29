@@ -18,6 +18,7 @@
   "scripts": {
     "dev": "nodemon",
     "start": "node index.js",
+    "less": "lessc public/src/styles/styles.less public/src/styles/compiled.min.css -x --source-map",
     "fix": "eslint . --ext .js --fix",
     "lint": "semistandard --fix \"**/*.js\""
   },

@@ -166,7 +166,7 @@ const sendAnswer = async (req, res) => {
           }
         }
       }
-    } else if (/(?:my name is|I'm|I am) (.{1,30})/gmi.test(humanInput)) {
+    } else if (/(?:my name is|I'm|I am) (?!fine|good)(.{1,30})/gmi.test(humanInput)) {
       const humanName = /(?:my name is|I'm|I am) (.{1,30})/gmi.exec(humanInput);
       responseText = `Nice to meet you ${humanName[1]}.`;
       rating = 1;

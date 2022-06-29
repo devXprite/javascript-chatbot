@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 // submit form
 const submitForm = () => {
   const chatInput = $(".chat-input").val();
@@ -25,9 +24,11 @@ const submitForm = () => {
           </div>
         </div>
         `);
-      $([document.documentElement, document.body]).animate({
-        scrollTop: $(".chat-msg-box.bot:last-child").offset().top,
-      }, { duration: 500 });
+      if ($(".chat-msg-box").length >= 10) {
+        $([document.documentElement, document.body]).animate({
+          scrollTop: $(".chat-msg-box.bot:last-child").offset().top,
+        }, { duration: 500 });
+      }
     },
     success: (data) => {
       const response = (data.responseText).replace(/\n/gm, "</br>");
@@ -58,9 +59,6 @@ window.onload = () => {
               </div>
             </div>
             `);
-          $([document.documentElement, document.body]).animate({
-            scrollTop: $(".chat-msg-box.bot:last-child").offset().top,
-          }, { duration: 500 });
         },
         success: (data) => {
           const response = (data.responseText).replace(/\n/gm, "</br>");
@@ -77,7 +75,7 @@ window.onload = () => {
   }, 3000);
 
   $.ajax({
-    url: "http://javascript-chatbot.vercel.app/api/allquestions",
+    url: "./api/allquestions",
     success: (data) => {
       data.forEach((qus) => {
         $(".questions.container").append(`
@@ -90,6 +88,24 @@ window.onload = () => {
   });
 };
 
+const toogleShowSuggestions = () => {
+  if ($("main").css("display") == "none") {
+    $(".all-questions").hide();
+    $("header img").attr("src", "./src/images/chat_icon.png");
+    $("main").show();
+    $("footer").show();
+  } else {
+    $(".all-questions").show();
+    $("header img").attr("src", "./src/images/close.png");
+    $("main").hide();
+    $("footer").hide();
+  }
+};
+
+$("#toogle-chat").on("click", () => {
+  toogleShowSuggestions();
+});
+
 window.onresize = () => {
   if (window.innerHeight < 580) {
     $("header").css("top", "-4em");
@@ -98,25 +114,37 @@ window.onresize = () => {
   }
 };
 
-const toogleShowQuestions = () => {
-  if ($("main").css("display") == "none") {
-    $(".questions.container").hide();
-    $("header img").attr("src", "./src/images/chat_icon.png");
-    $("main").show();
-    $("footer").show();
-  } else {
-    $(".questions.container").css("display", "flex");
-    $("header img").attr("src", "./src/images/close.png");
-    $("main").hide();
-    $("footer").hide();
-  }
-};
-
-$("#toogle-chat").on("click", () => {
-  toogleShowQuestions();
-});
-
 $("#chat-form").submit((e) => {
   e.preventDefault();
   submitForm();
+});
+
+const typed = new Typed(".chat-input", {
+  strings: [
+    "how many mm in 1 cm",
+    "change 10 l into ml",
+    "what is computer",
+    "what is JavaScript",
+    "what is HTML",
+    "tell me about ChatBot",
+    "who is Mahatma Gandhi",
+    "who is Nelson Mandela",
+    "When do you have birthday?",
+    "Tell me about your personality.",
+    "I want a funny joke.",
+    "Can you tell me a joke please?",
+    "Can you tell me something about your creators?",
+    "Are you just a bot?",
+    "Date of your birthday.",
+    "How are you today?",
+  ],
+  typeSpeed: 60,
+  backSpeed: 30,
+  backDelay: 1500,
+  showCursor: true,
+  cursorChar: "|",
+  attr: "placeholder",
+  loop: true,
+  bindInputFocusEvents: true,
+  shuffle: true,
 });

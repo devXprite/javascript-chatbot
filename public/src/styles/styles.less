@@ -139,13 +139,16 @@ main {
     }
 }
 
+.all-questions{
+    display: none;
+}
+
 .questions.container {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
     align-content: center;
     justify-content: space-around;
-    display: none;
 
     h2 {
         padding-top: 3.7em;
@@ -197,6 +200,10 @@ footer {
     border: 2px solid #6e6d6d;
     padding-left: 0.5em;
     color: @color_5;
+
+    &::placeholder {
+        color: #9f9f9f;
+    }
 
     &:focus {
         outline: none;
