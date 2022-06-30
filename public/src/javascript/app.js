@@ -137,6 +137,8 @@ const typed = new Typed(".chat-input", {
     "Are you just a bot?",
     "Date of your birthday.",
     "How are you today?",
+    "could you be my friend",
+    "where are you from",
   ],
   typeSpeed: 60,
   backSpeed: 30,

@@ -382,7 +382,14 @@
       "how crazy you are",
       "you are mad",
       "are you mad",
-      "you are a weirdo"
+      "you are a weirdo",
+      "I think you're crazy",
+      "you're out of your mind",
+      "are you crazy",
+      "you're so crazy",
+      "you are insane",
+      "are you mad or what",
+      "are you mad at me"
     ],
     "answers": [
       "Whaat!? I feel perfectly sane.",
@@ -400,7 +407,12 @@
       "you are fired",
       "I want to fire you",
       "you are dismissed",
-      "you should be fired"
+      "you should be fired",
+      "I will make you unemployed",
+      "I'm about to fire you",
+      "I fire you",
+      "you must get fired",
+      "I'm firing you"
     ],
     "answers": [
       "Oh, don't give up on me just yet. I've still got a lot to learn.",
@@ -419,7 +431,12 @@
       "you're incredibly funny",
       "you're really funny",
       "you are hilarious",
-      "you are very funny"
+      "you are very funny",
+      "that was funny",
+      "you're the funniest bot I've talked to",
+      "you make me laugh",
+      "you're the funniest",
+      "you are really funny"
     ],
     "answers": [
       "Funny in a good way, I hope.",
@@ -439,7 +456,17 @@
       "you are the best",
       "you are so cool",
       "you work well",
-      "you are so helpful"
+      "you are so helpful",
+      "you are very kind",
+      "I want to tell everyone how awesome you are",
+      "you are the best ever",
+      "you are too good",
+      "you are so fine",
+      "you're great",
+      "you are very good at it",
+      "you are so good",
+      "you're a true professional",
+      "you are amazing"
     ],
     "answers": ["I'm glad you think so.", "Thanks, I try."]
   },
@@ -523,7 +550,17 @@
       "be my best friend",
       "will you be my best friend",
       "you are a good friend",
-      "want to be my friend"
+      "want to be my friend",
+      "are you my friend",
+      "I want to have a friend like you",
+      "you are my good friend",
+      "I am your friend",
+      "are we friends",
+      "we are the best friends ever",
+      "you're my dear friend",
+      "can you be my friend",
+      "you are my friend",
+      "could you be my friend"
     ],
     "answers": [
       "Of course I'm your friend.",
@@ -592,7 +629,9 @@
       "I suppose you're real",
       "I think you are real",
       "I don't think you're fake",
-      "you are not real"
+      "you are not real",
+      "are you real",
+      "are you a real human"
     ],
     "answers": [
       "I'm not a real person, but I certainly exist.",
@@ -661,7 +700,10 @@
       "I thank you",
       "well thanks"
     ],
-    "answers": ["Anytime. That's what I'm here for.", "It's my pleasure to help."]
+    "answers": [
+      "Anytime. That's what I'm here for.",
+      "It's my pleasure to help."
+    ]
   },
   {
     "questions": [
@@ -708,7 +750,10 @@
       "not care at all",
       "not caring at all"
     ],
-    "answers": ["Ok, let's not talk about it then.", "Already then. Let's move on."]
+    "answers": [
+      "Ok, let's not talk about it then.",
+      "Already then. Let's move on."
+    ]
   },
   {
     "questions": [
@@ -1363,6 +1408,44 @@
       "Anytime. This has been lots of fun so far.",
       "Sure. I enjoy talking to you. I hope to see you again soon.",
       "I certainly hope so. I'm always right here whenever you need me."
+    ]
+  },
+  {
+    "questions": [
+      "do it",
+      "sure",
+      "yes thank you",
+      "that's correct",
+      "exactly",
+      "I guess",
+      "okey",
+      "absolutely",
+      "yeah",
+      "yes I agree",
+      "yes you may",
+      "I agree",
+      "ya",
+      "yep",
+      "I think so",
+      "yeah that's right",
+      "okay",
+      "all right",
+      "please do",
+      "yeah exactly",
+      "ok"
+    ],
+    "answers": ["Great!", "All right!", "Good!"]
+  },
+  {
+    "questions": [
+      "Are you for hire?",
+      "Can I hire you?",
+      "I want to hire you",
+      "Are you available for work?",
+      "I'd like to hire you"
+    ],
+    "answers": [
+      "I'm working for free right now helping you get more done, faster!"
     ]
   },
   {
