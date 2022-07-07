@@ -23,7 +23,7 @@ To get a local copy up and running follow these simple steps.
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/7ORP3DO/javascript-chatbot
+   git clone https://github.com/devXprite/javascript-chatbot
    ```
 2. Install NPM packages
    ```sh
@@ -64,7 +64,7 @@ To get a local copy up and running follow these simple steps.
 
 Click this button to configure your Project and deploy it to Vercel.  
   
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2F7ORP3DO%2Fjavascript-chatbot)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FdevXprite%2Fjavascript-chatbot)
 
 ## Credit
 

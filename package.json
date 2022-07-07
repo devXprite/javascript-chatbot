@@ -1,19 +1,19 @@
 {
   "name": "JavaScript ChatBot",
-  "description": "A Powerful ChatBot in NodeJs",
+  "description": "A Simple & Powerful ChatBot in NodeJs",
   "version": "1.0.0",
   "private": false,
   "license": "MIT",
   "author": {
-    "name": "7ORP3DO",
-    "email": "bhps82@gmail.com"
+    "name": "DevXprite",
+    "email": "devXprite@gmail.com"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/7orp3do/javascript-chatbot.git"
+    "url": "https://github.com/devXprite/javascript-chatbot.git"
   },
   "bugs": {
-    "url": "https://github.com/7orp3do/javascript-chatbot/issues"
+    "url": "https://github.com/devXprite/javascript-chatbot/issues"
   },
   "scripts": {
     "dev": "nodemon -e js,json,less,css",
