@@ -56,7 +56,7 @@
       "who is your developer",
       "I said who made you tell me"
     ],
-    "answers": ["I am developed by [DEVELOPER_EMAIL]"]
+    "answers": ["I am developed by [DEVELOPER_NAME]"]
   },
   {
     "questions": [

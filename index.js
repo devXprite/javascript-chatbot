@@ -28,9 +28,10 @@ const unitConverterChat = require("./intents/unit_converter.json");
 dotenv.config();
 
 const standardRating = 0.6;
-const developerName = pkg.author.name;
-const developerEmail = pkg.author.email;
-const bugReportUrl = pkg.bugs.url;
+const botName = process.env.BOT_NAME || pkg.name;
+const developerName = process.env.DEVELOPER_NAME || pkg.author.name;
+const developerEmail = process.env.DEVELOPER_EMAIL || pkg.author.email;
+const bugReportUrl = process.env.DEVELOPER_NAME || pkg.bugs.url;
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -39,8 +40,14 @@ let allQustions = [];
 
 allQustions = _.concat(allQustions, wikipediaChat);
 allQustions = _.concat(allQustions, unitConverterChat);
-allQustions = _.concat(allQustions, _.flattenDeep(_.map(supportChat, "questions")));
-allQustions = _.concat(allQustions, _.flattenDeep(_.map(mainChat, "questions")));
+allQustions = _.concat(
+  allQustions,
+  _.flattenDeep(_.map(supportChat, "questions")),
+);
+allQustions = _.concat(
+  allQustions,
+  _.flattenDeep(_.map(mainChat, "questions")),
+);
 
 allQustions = _.uniq(allQustions);
 allQustions = _.compact(allQustions);
@@ -48,11 +55,15 @@ allQustions = _.compact(allQustions);
 const changeUnit = (amount, unitFrom, unitTo) => {
   try {
     const convertValue = convert(amount).from(unitFrom).to(unitTo);
-    const returnMsg = `${amount} ${convert().describe(unitFrom).plural}(${convert().describe(unitFrom).abbr}) is equle to ${convertValue} ${convert().describe(unitTo).plural}(${convert().describe(unitTo).abbr}).`;
+    const returnMsg = `${amount} ${convert().describe(unitFrom).plural}(${
+      convert().describe(unitFrom).abbr
+    }) is equle to ${convertValue} ${convert().describe(unitTo).plural}(${
+      convert().describe(unitTo).abbr
+    }).`;
 
     return returnMsg;
   } catch (error) {
-    return (error.message);
+    return error.message;
   }
 };
 
@@ -62,7 +73,11 @@ const sendAllQuestions = (req, res) => {
   try {
     allQustions.forEach((qus) => {
       if (qus.length >= 15) {
-        if (/^(can|are|may|how|what|when|who|do|where|your|from|is|will|why)/gi.test(qus)) {
+        if (
+          /^(can|are|may|how|what|when|who|do|where|your|from|is|will|why)/gi.test(
+            qus,
+          )
+        ) {
           humanQuestions.push(`${upperCaseFirst(qus)}?`);
         } else {
           humanQuestions.push(`${upperCaseFirst(qus)}.`);
@@ -90,41 +105,51 @@ const sendAnswer = async (req, res) => {
 
   try {
     const query = decodeURIComponent(req.query.q).replace(/\s+/g, " ").trim() || "Hello";
-    const humanInput = lowerCase(query.replace(/(\?|\.|!)$/gmi, ""));
+    const humanInput = lowerCase(query.replace(/(\?|\.|!)$/gim, ""));
 
-    const regExforUnitConverter = /(convert|change|in).{1,2}(\d{1,8})/gmi;
-    const regExforWikipedia = /(search for|tell me about|what is|who is)(?!.you) (.{1,30})/gmi;
-    const regExforSupport = /(invented|programmer|teacher|create|maker|who made|creator|developer|bug|email|report|problems)/gmi;
+    const regExforUnitConverter = /(convert|change|in).{1,2}(\d{1,8})/gim;
+    const regExforWikipedia = /(search for|tell me about|what is|who is)(?!.you) (.{1,30})/gim;
+    const regExforSupport = /(invented|programmer|teacher|create|maker|who made|creator|developer|bug|email|report|problems)/gim;
 
     let similarQuestionObj;
 
     if (regExforUnitConverter.test(humanInput)) {
       action = "unit_converter";
-      similarQuestionObj = stringSimilarity.findBestMatch(humanInput, unitConverterChat).bestMatch;
+      similarQuestionObj = stringSimilarity.findBestMatch(
+        humanInput,
+        unitConverterChat,
+      ).bestMatch;
     } else if (regExforWikipedia.test(humanInput)) {
       action = "wikipedia";
-      similarQuestionObj = stringSimilarity.findBestMatch(humanInput, wikipediaChat).bestMatch;
+      similarQuestionObj = stringSimilarity.findBestMatch(
+        humanInput,
+        wikipediaChat,
+      ).bestMatch;
     } else if (regExforSupport.test(humanInput)) {
       action = "support";
-      similarQuestionObj = stringSimilarity.findBestMatch(humanInput, _.flattenDeep((_.map(supportChat, "questions")))).bestMatch;
+      similarQuestionObj = stringSimilarity.findBestMatch(
+        humanInput,
+        _.flattenDeep(_.map(supportChat, "questions")),
+      ).bestMatch;
     } else {
       action = "main_chat";
-      similarQuestionObj = stringSimilarity.findBestMatch(humanInput, _.flattenDeep((_.map(mainChat, "questions")))).bestMatch;
+      similarQuestionObj = stringSimilarity.findBestMatch(
+        humanInput,
+        _.flattenDeep(_.map(mainChat, "questions")),
+      ).bestMatch;
     }
 
     const similarQuestionRating = similarQuestionObj.rating;
     const similarQuestion = similarQuestionObj.target;
 
     if (action == "unit_converter") {
-      const valuesObj = extractValues(humanInput, similarQuestion, { delimiters: ["{", "}"] });
+      const valuesObj = extractValues(humanInput, similarQuestion, {
+        delimiters: ["{", "}"],
+      });
 
       rating = 1;
       try {
-        const {
-          amount,
-          unitFrom,
-          unitTo,
-        } = valuesObj;
+        const { amount, unitFrom, unitTo } = valuesObj;
 
         responseText = changeUnit(amount, unitFrom, unitTo);
       } catch (error) {
@@ -132,15 +157,21 @@ const sendAnswer = async (req, res) => {
         console.log(error);
       }
     } else if (action == "wikipedia") {
-      const valuesObj = extractValues(humanInput, similarQuestion, { delimiters: ["{", "}"] });
+      const valuesObj = extractValues(humanInput, similarQuestion, {
+        delimiters: ["{", "}"],
+      });
 
       let { topic } = valuesObj;
       topic = capitalCase(topic);
 
       try {
-        const wikipediaResponse = await axios(`https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=1&explaintext=1&titles=${topic}`);
+        const wikipediaResponse = await axios(
+          `https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=1&explaintext=1&titles=${topic}`,
+        );
         const wikipediaResponseData = wikipediaResponse.data;
-        const wikipediaResponsePageNo = Object.keys(wikipediaResponseData.query.pages)[0];
+        const wikipediaResponsePageNo = Object.keys(
+          wikipediaResponseData.query.pages,
+        )[0];
         const wikipediaResponseText = wikipediaResponseData.query.pages[wikipediaResponsePageNo].extract;
 
         if (wikipediaResponseText == undefined || wikipediaResponseText == "") {
@@ -166,8 +197,10 @@ const sendAnswer = async (req, res) => {
           }
         }
       }
-    } else if (/(?:my name is|I'm|I am) (?!fine|good)(.{1,30})/gmi.test(humanInput)) {
-      const humanName = /(?:my name is|I'm|I am) (.{1,30})/gmi.exec(humanInput);
+    } else if (
+      /(?:my name is|I'm|I am) (?!fine|good)(.{1,30})/gim.test(humanInput)
+    ) {
+      const humanName = /(?:my name is|I'm|I am) (.{1,30})/gim.exec(humanInput);
       responseText = `Nice to meet you ${humanName[1]}.`;
       rating = 1;
     } else {
@@ -185,7 +218,11 @@ const sendAnswer = async (req, res) => {
       } else {
         isFallback = true;
         action = "Default_Fallback";
-        if (humanInput.length >= 5 && humanInput.length <= 20 && !/(\s{1,})/gmi.test(humanInput)) {
+        if (
+          humanInput.length >= 5
+          && humanInput.length <= 20
+          && !/(\s{1,})/gim.test(humanInput)
+        ) {
           responseText = "You are probably hitting random keys :D";
         } else {
           responseText = _.sample(fallbackChat);
@@ -198,6 +235,7 @@ const sendAnswer = async (req, res) => {
       isFallback = true;
     } else if (action != "wikipedia") {
       responseText = responseText
+        .replace(/(\[BOT_NAME\])/g, botName)
         .replace(/(\[DEVELOPER_NAME\])/g, developerName)
         .replace(/(\[DEVELOPER_EMAIL\])/g, developerEmail)
         .replace(/(\[BUG_URL\])/g, bugReportUrl);
@@ -213,7 +251,7 @@ const sendAnswer = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    if ((error.message).includes("URI")) {
+    if (error.message.includes("URI")) {
       res.status(500).send({ error: error.message, code: 500 });
     } else {
       res.status(500).send({ error: "Internal Server Error!", code: 500 });

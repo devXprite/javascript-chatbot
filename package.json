@@ -1,11 +1,11 @@
 {
   "name": "JavaScript ChatBot",
   "description": "A Powerful ChatBot in NodeJs",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "private": false,
   "license": "MIT",
   "author": {
-    "name": "Prateek Singh",
+    "name": "7ORP3DO",
     "email": "bhps82@gmail.com"
   },
   "repository": {
@@ -16,11 +16,11 @@
     "url": "https://github.com/7orp3do/javascript-chatbot/issues"
   },
   "scripts": {
-    "dev": "nodemon",
+    "dev": "nodemon -e js,json,less,css",
     "start": "node index.js",
     "less": "lessc public/src/styles/styles.less public/src/styles/compiled.min.css -x --source-map",
-    "fix": "eslint . --ext .js --fix",
-    "lint": "semistandard --fix \"**/*.js\""
+    "lint": "semistandard --fix \"**/*.js\"",
+    "link:fix": "eslint . --ext .js --fix"
   },
   "devDependencies": {
     "eslint": "^8.17.0",

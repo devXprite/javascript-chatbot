@@ -147,6 +147,6 @@ const typed = new Typed(".chat-input", {
   cursorChar: "|",
   attr: "placeholder",
   loop: true,
-  bindInputFocusEvents: true,
+  bindInputFocusEvents: false,
   shuffle: true,
 });
