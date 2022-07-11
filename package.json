@@ -45,6 +45,7 @@
     "serve-static": "^1.15.0",
     "string-similarity": "^4.0.4",
     "upper-case-first": "^2.0.2",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "wikipedia": "^1.1.9"
   }
 }

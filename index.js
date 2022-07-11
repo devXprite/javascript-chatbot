@@ -1,12 +1,13 @@
 /* eslint-disable max-len */
 const fs = require("fs");
 const _ = require("lodash");
+const wiki = require("wikipedia");
 const convert = require("convert-units");
+const { lowerCase } = require("lower-case");
+const { capitalCase } = require("change-case");
 const extractValues = require("extract-values");
 const stringSimilarity = require("string-similarity");
-const { lowerCase } = require("lower-case");
 const { upperCaseFirst } = require("upper-case-first");
-const { capitalCase } = require("change-case");
 
 const cors = require("cors");
 const path = require("path");
@@ -165,14 +166,8 @@ const sendAnswer = async (req, res) => {
       topic = capitalCase(topic);
 
       try {
-        const wikipediaResponse = await axios(
-          `https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=1&explaintext=1&titles=${topic}`,
-        );
-        const wikipediaResponseData = wikipediaResponse.data;
-        const wikipediaResponsePageNo = Object.keys(
-          wikipediaResponseData.query.pages,
-        )[0];
-        const wikipediaResponseText = wikipediaResponseData.query.pages[wikipediaResponsePageNo].extract;
+        const wikipediaResponse = await wiki.summary(topic);
+        const wikipediaResponseText = wikipediaResponse.extract;
 
         if (wikipediaResponseText == undefined || wikipediaResponseText == "") {
           responseText = `Sorry, I can't find any article related to "${topic}".`;
@@ -181,9 +176,8 @@ const sendAnswer = async (req, res) => {
           responseText = wikipediaResponseText;
         }
       } catch (error) {
-        if (/(ETIMEDOUT|ENOTFOUND)/gi.test(error.message)) {
-          responseText = `Sorry, we can't find any article related to "${topic}".`;
-        }
+        responseText = `Sorry, we can't find any article related to "${topic}".`;
+        console.log(error);
       }
     } else if (action == "support") {
       rating = similarQuestionRating;
